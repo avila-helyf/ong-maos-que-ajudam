@@ -12,7 +12,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { minify } from "html-minifier-terser";
 
-const CAMINHO = "dist/html/index.html";
+const CAMINHO = "dist/index.html";
 
 const original = await readFile(CAMINHO, "utf-8");
 

@@ -104,6 +104,20 @@ O projeto não possui uma suíte de testes automatizados (unitários) configurad
 - **Testes manuais end-to-end com Playwright** (headless Chromium), rodados durante o desenvolvimento para confirmar visualmente o comportamento de cada tela, o roteamento por hash, as máscaras, a persistência em localStorage e a ausência de erros no console — não fazem parte do repositório como uma suíte permanente, mas guiaram as correções de bugs.
 - Depois de cada `npm run build`, a mesma bateria de testes Playwright foi reaplicada servindo o conteúdo de `dist/` (o build minificado real, não o código-fonte), para garantir que o bundling/minificação não quebrou nenhum comportamento — ver "Minificação" acima.
 
+## Publicação e deploy
+
+O site é publicado no **GitHub Pages**, com entrega contínua via **GitHub Actions** (`.github/workflows/deploy.yml`). A escolha recaiu sobre o GitHub Pages por três motivos técnicos: (1) o projeto já é um site 100% estático após o build (HTML/CSS/JS/imagens, sem backend) — exatamente o que o Pages serve, sem custo e sem servidor para administrar; (2) o hospedeiro já é o mesmo GitHub onde o código está versionado, então não é preciso conectar uma conta externa nem gerenciar credenciais adicionais; (3) o deploy fica automaticamente auditável pelo histórico de Actions do próprio repositório.
+
+Fluxo de configuração:
+
+1. O repositório foi criado no GitHub e o histórico local (já no padrão GitFlow, com `main`/`develop`/`feature/*`) foi enviado via `git push`.
+2. Em Settings → Pages, a opção "Source" foi definida como **GitHub Actions** (em vez de servir direto de uma branch), para que o workflow controle o build.
+3. O workflow `deploy.yml` dispara a cada push em `main`: instala as dependências (`npm ci`), roda `npm run build` (o mesmo pipeline Vite descrito em "Minificação" acima, com a variável `VITE_BASE=/ong-maos-que-ajudam/` — necessária porque um repositório de projeto no GitHub Pages serve o site dentro desse subcaminho, não na raiz do domínio) e publica o conteúdo de `dist/` com as actions oficiais `upload-pages-artifact`/`deploy-pages`.
+4. Esse mesmo mecanismo é a integração contínua: qualquer novo merge em `main` reconstrói e republica o site automaticamente, sem passo manual.
+
+URL publicada: `https://avila-helyf.github.io/ong-maos-que-ajudam/`
+Repositório: `https://github.com/avila-helyf/ong-maos-que-ajudam`
+
 ## Funcionalidades principais
 
 - Navegação SPA entre Início / Projetos / Cadastro, sem recarregar a página (`#/inicio`, `#/projetos`, `#/cadastro`).
