@@ -1,0 +1,16 @@
+{
+  "name": "ong-maos-que-ajudam",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SPA da ONG Mãos que Ajudam — build de produção com Vite (bundling + minificação de CSS/JS/HTML).",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/copiar-estaticos.js && node scripts/minificar-html.js",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "html-minifier-terser": "^7.2.0",
+    "vite": "^5.4.11"
+  }
+}
