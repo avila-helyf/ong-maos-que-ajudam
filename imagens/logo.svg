@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="logoTitulo">
+  <title id="logoTitulo">Logotipo da ONG Mãos que Ajudam: duas mãos unidas ao redor de um coração</title>
+
+  <circle cx="256" cy="256" r="248" fill="#1f6f5c" stroke="#144d40" stroke-width="10"/>
+
+  <path d="M256 260
+           C 200 200, 145 210, 145 260
+           C 145 300, 200 330, 256 380
+           C 312 330, 367 300, 367 260
+           C 367 210, 312 200, 256 260 Z"
+        fill="#ffffff"/>
+
+  <g fill="#f4a636">
+    <rect x="56" y="316" width="130" height="150" rx="45"/>
+    <rect x="70" y="286" width="18" height="60" rx="9"/>
+    <rect x="98" y="286" width="18" height="60" rx="9"/>
+    <rect x="126" y="286" width="18" height="60" rx="9"/>
+
+    <rect x="326" y="316" width="130" height="150" rx="45"/>
+    <rect x="340" y="286" width="18" height="60" rx="9"/>
+    <rect x="368" y="286" width="18" height="60" rx="9"/>
+    <rect x="396" y="286" width="18" height="60" rx="9"/>
+  </g>
+</svg>

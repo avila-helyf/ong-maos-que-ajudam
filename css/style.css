@@ -1,0 +1,709 @@
+/* ==========================================================
+   ONG Mãos que Ajudam — Design System e folha de estilo
+   ========================================================== */
+
+:root {
+  /* ---- Cores primárias (identidade / ação principal) ---- */
+  --cor-primaria: #1f6f5c;
+  --cor-primaria-escura: #144d40;
+  --cor-primaria-clara: #eaf5f1;
+
+  /* ---- Cores secundárias (destaque / chamada para ação) ---- */
+  --cor-secundaria: #f4a636;
+  --cor-secundaria-escura: #d98f20;
+
+  /* ---- Cores neutras (texto, fundos, bordas) ---- */
+  --cor-neutro-900: #232323;
+  --cor-neutro-600: #5a5a5a;
+  --cor-neutro-300: #e0e0da;
+  --cor-neutro-100: #fafaf7;
+  --cor-neutro-000: #ffffff;
+
+  /* ---- Cores semânticas (feedback de validação de formulário) ---- */
+  --cor-erro: #c0392b;
+  --cor-sucesso: #2f9e58;
+
+  /* ---- Escala tipográfica (5 tamanhos, razão ~1.25) ---- */
+  --texto-sm: 0.8rem;     /* 12.8px — legendas, dicas de campo */
+  --texto-base: 1rem;     /* 16px   — corpo de texto */
+  --texto-md: 1.25rem;    /* 20px   — subtítulos (h3) */
+  --texto-lg: 1.563rem;   /* 25px   — títulos de seção (h2) */
+  --texto-xl: 1.953rem;   /* 31.25px — título principal (h1) */
+
+  /* ---- Escala de espaçamento modular (base 8px) ---- */
+  --espaco-1: 0.25rem;  /* 4px  */
+  --espaco-2: 0.5rem;   /* 8px  */
+  --espaco-3: 1rem;     /* 16px */
+  --espaco-4: 1.5rem;   /* 24px */
+  --espaco-5: 2rem;     /* 32px */
+  --espaco-6: 3rem;     /* 48px */
+
+  /* ---- Outros tokens ---- */
+  --fonte-base: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --raio: 10px;
+  --largura-conteudo: 1100px;
+
+  /* ---- Breakpoints (documentação — valores literais nos @media abaixo,
+     pois custom properties do CSS não podem ser usadas dentro de
+     condições de @media) -------------------------------------------
+     bp-1: 480px  — smartphones em modo paisagem
+     bp-2: 640px  — tablets pequenos / phablets
+     bp-3: 1024px — tablets grandes / notebooks
+     bp-4: 1280px — desktops
+     bp-5: 1536px — monitores wide / ultrawide
+  ------------------------------------------------------------------- */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  color: var(--cor-neutro-900);
+  background-color: var(--cor-neutro-100);
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--cor-primaria);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+/* ---------- Cabeçalho ---------- */
+
+header {
+  background-color: var(--cor-neutro-000);
+  border-bottom: 1px solid var(--cor-neutro-300);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.cabecalho-conteudo {
+  max-width: var(--largura-conteudo);
+  margin: 0 auto;
+  padding: var(--espaco-3) var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  text-decoration: none;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+}
+
+.nome-ong {
+  font-weight: 700;
+  font-size: var(--texto-md);
+  color: var(--cor-primaria-escura);
+}
+
+header nav {
+  width: 100%;
+}
+
+/* Mobile-first: menu recolhido por padrão, expandido via JS
+   (classe .menu-aberto) alternando a altura máxima do contêiner
+   para permitir uma transição suave. */
+header nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.25s ease;
+}
+
+header nav ul.menu-aberto {
+  max-height: 240px;
+  opacity: 1;
+}
+
+/* Botão "hambúrguer" — visível apenas em telas estreitas */
+.menu-hamburguer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: flex-end;
+  width: 28px;
+  height: 20px;
+  padding: 0;
+  margin-top: calc(var(--espaco-3) * -1);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-hamburguer span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--cor-primaria-escura);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.menu-hamburguer[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(8.5px) rotate(45deg);
+}
+
+.menu-hamburguer[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-hamburguer[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-8.5px) rotate(-45deg);
+}
+
+header nav a {
+  color: var(--cor-neutro-900);
+  font-weight: 600;
+  padding: var(--espaco-1) 0;
+  border-bottom: 2px solid transparent;
+}
+
+header nav a:hover,
+header nav a[aria-current="page"] {
+  color: var(--cor-primaria);
+  border-bottom-color: var(--cor-secundaria);
+  text-decoration: none;
+}
+
+/* ---------- Layout principal ---------- */
+
+main {
+  max-width: var(--largura-conteudo);
+  margin: 0 auto;
+  padding: var(--espaco-5) var(--espaco-4) var(--espaco-6);
+}
+
+section {
+  margin-bottom: var(--espaco-6);
+}
+
+h1 {
+  font-size: var(--texto-xl);
+  color: var(--cor-primaria-escura);
+  margin-bottom: var(--espaco-2);
+}
+
+h2 {
+  font-size: var(--texto-lg);
+  color: var(--cor-primaria-escura);
+  border-left: 4px solid var(--cor-secundaria);
+  padding-left: var(--espaco-2);
+  margin-bottom: var(--espaco-3);
+}
+
+h3 {
+  font-size: var(--texto-md);
+  color: var(--cor-primaria);
+  margin-bottom: var(--espaco-1);
+}
+
+.secao-destaque {
+  background: linear-gradient(135deg, var(--cor-primaria-clara), #fbf3e6);
+  border-radius: var(--raio);
+  padding: var(--espaco-5);
+}
+
+.imagem-apresentacao {
+  border-radius: var(--raio);
+  margin: var(--espaco-3) 0;
+  max-width: 480px;
+}
+
+.botao-cta {
+  display: inline-block;
+  background-color: var(--cor-primaria);
+  color: var(--cor-neutro-000);
+  padding: var(--espaco-2) var(--espaco-4);
+  border-radius: 999px;
+  font-weight: 600;
+  margin-top: var(--espaco-2);
+  border: 2px solid transparent;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+/* :hover — reforça a cor ao passar o mouse */
+.botao-cta:hover {
+  background-color: var(--cor-primaria-escura);
+  text-decoration: none;
+}
+
+/* :focus-visible — contorno visível apenas para navegação por
+   teclado, sem poluir o clique de mouse/toque */
+.botao-cta:focus-visible {
+  background-color: var(--cor-primaria-escura);
+  outline: 3px solid var(--cor-secundaria);
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+/* :active — feedback imediato de "pressionado" */
+.botao-cta:active {
+  transform: scale(0.97);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------- Sistema de Grid (12 colunas, mobile-first) ----------
+   .grid é o container: sempre 12 colunas, gap fixo pela escala de
+   espaçamento. Os itens filhos ocupam 12/12 (empilhados) por padrão
+   em telas pequenas e ganham a largura de coluna definida por
+   .col-4 / .col-6 / .col-8 a partir do breakpoint bp-2 (tablet).
+   ------------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--espaco-4);
+}
+
+.grid > * {
+  grid-column: span 12;
+}
+
+/* ---------- Blocos de projetos.html ---------- */
+
+#voluntariado article,
+#doacao article {
+  background-color: var(--cor-neutro-000);
+  border: 1px solid var(--cor-neutro-300);
+  border-radius: var(--raio);
+  padding: var(--espaco-3) var(--espaco-4);
+  margin-bottom: var(--espaco-3);
+}
+
+.grid-cards {
+  margin-bottom: var(--espaco-3);
+}
+
+.grid-cards article {
+  margin-bottom: 0;
+}
+
+/* ---------- Formulário ---------- */
+
+form {
+  margin-top: var(--espaco-4);
+}
+
+fieldset {
+  border: 1px solid var(--cor-neutro-300);
+  border-radius: var(--raio);
+  padding: var(--espaco-3) var(--espaco-4);
+  margin-bottom: var(--espaco-4);
+  background-color: var(--cor-neutro-000);
+}
+
+legend {
+  font-weight: 700;
+  color: var(--cor-primaria-escura);
+  padding: 0 var(--espaco-1);
+}
+
+.campo {
+  margin-bottom: var(--espaco-3);
+}
+
+.campo-grid.grid {
+  margin-bottom: var(--espaco-1);
+}
+
+.campo-grid .campo input,
+.campo-grid .campo select {
+  max-width: 100%;
+}
+
+.campo label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--espaco-1);
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  max-width: 420px;
+  padding: var(--espaco-2) var(--espaco-2);
+  border: 1px solid var(--cor-neutro-300);
+  border-radius: 6px;
+  font-size: var(--texto-base);
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campo input:focus,
+.campo select:focus {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 1px;
+}
+
+/* Feedback de erro/sucesso — aplicado apenas a campos com a classe
+   .tocado, adicionada via JS (mascaras.js) no evento blur de cada
+   campo, ou na tentativa de envio do formulário (feedback.js).
+   Essa abordagem funciona de forma consistente em qualquer tipo de
+   campo — inclusive <select> e <input type="date">, que não têm um
+   atributo placeholder real e por isso não funcionariam de forma
+   confiável com o truque :not(:placeholder-shown). Assim, nenhum
+   campo aparece colorido antes de o usuário interagir com ele. */
+.campo input.tocado:invalid,
+.campo select.tocado:invalid {
+  border-color: var(--cor-erro);
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.15);
+}
+
+.campo input.tocado:valid,
+.campo select.tocado:valid {
+  border-color: var(--cor-sucesso);
+  box-shadow: 0 0 0 3px rgba(47, 158, 88, 0.12);
+}
+
+.campo small {
+  display: block;
+  color: var(--cor-neutro-600);
+  font-size: var(--texto-sm);
+  margin-top: var(--espaco-1);
+}
+
+.campo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.campo-checkbox label {
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+button[type="submit"] {
+  background-color: var(--cor-secundaria);
+  color: var(--cor-neutro-900);
+  border: 2px solid transparent;
+  padding: var(--espaco-3) var(--espaco-5);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: var(--texto-base);
+  cursor: pointer;
+  margin-top: var(--espaco-2);
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--cor-secundaria-escura);
+}
+
+button[type="submit"]:focus-visible {
+  background-color: var(--cor-secundaria-escura);
+  outline: 3px solid var(--cor-primaria-escura);
+  outline-offset: 2px;
+}
+
+button[type="submit"]:active {
+  transform: scale(0.97);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+button[type="submit"]:disabled {
+  background-color: var(--cor-neutro-300);
+  color: var(--cor-neutro-600);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================================
+   Componentes de feedback (badges, alertas, toast)
+   ========================================================== */
+
+/* ---------- Badges (etiquetas de categorização) ---------- */
+
+.badge {
+  display: inline-block;
+  padding: var(--espaco-1) var(--espaco-2);
+  border-radius: 999px;
+  font-size: var(--texto-sm);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: var(--espaco-2);
+}
+
+.badge-primaria {
+  background-color: var(--cor-primaria-clara);
+  color: var(--cor-primaria-escura);
+}
+
+.badge-secundaria {
+  background-color: #fdf1dd;
+  color: var(--cor-secundaria-escura);
+}
+
+.badge-neutro {
+  background-color: var(--cor-neutro-300);
+  color: var(--cor-neutro-900);
+}
+
+/* ---------- Alertas (mensagens de estado do sistema) ---------- */
+
+.alerta {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-radius: var(--raio);
+  border-left: 4px solid currentColor;
+  margin-bottom: var(--espaco-3);
+  font-size: var(--texto-base);
+}
+
+.alerta strong {
+  font-weight: 700;
+}
+
+.alerta-icone {
+  font-weight: 700;
+  line-height: 1;
+}
+
+.alerta-info {
+  background-color: #eaf2fb;
+  color: #1c5a9c;
+}
+
+.alerta-sucesso {
+  background-color: #eaf7ee;
+  color: var(--cor-sucesso);
+}
+
+.alerta-aviso {
+  background-color: #fdf3df;
+  color: #92650c;
+}
+
+.alerta-erro {
+  background-color: #fbeceb;
+  color: var(--cor-erro);
+}
+
+/* ---------- Toast (notificação não obstrutiva) ---------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--espaco-4);
+  transform: translate(-50%, 20px);
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  background-color: var(--cor-primaria-escura);
+  color: var(--cor-neutro-000);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-radius: var(--raio);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 50;
+  max-width: calc(100% - var(--espaco-4) * 2);
+}
+
+.toast.toast-visivel {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.toast-erro {
+  background-color: var(--cor-erro);
+}
+
+/* ---------- Rodapé ---------- */
+
+footer {
+  background-color: var(--cor-primaria-escura);
+  color: var(--cor-neutro-100);
+  text-align: center;
+  padding: var(--espaco-4);
+}
+
+footer p {
+  margin: 0 0 var(--espaco-2);
+}
+
+footer nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: 0;
+}
+
+footer nav a {
+  color: var(--cor-neutro-100);
+}
+
+/* ---------- Histórico de cadastros (localStorage) ---------- */
+
+.botao-secundario {
+  background-color: transparent;
+  color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+  margin-top: var(--espaco-3);
+}
+
+.botao-secundario:hover {
+  background-color: var(--cor-primaria-clara);
+}
+
+.historico-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.historico-lista li {
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-neutro-300);
+  border-radius: var(--raio);
+  background-color: var(--cor-neutro-100);
+}
+
+.historico-data {
+  font-size: var(--texto-sm);
+  color: var(--cor-neutro-600);
+}
+
+.historico-vazio,
+.texto-auxiliar {
+  color: var(--cor-neutro-600);
+  font-size: var(--texto-sm);
+}
+
+/* ==========================================================
+   Breakpoints responsivos (mobile-first, min-width)
+   ========================================================== */
+
+/* ---- bp-1: 480px — smartphones em modo paisagem ---- */
+@media (min-width: 480px) {
+  .secao-destaque {
+    padding: var(--espaco-5) var(--espaco-6);
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+}
+
+/* ---- bp-2: 640px — tablets pequenos / phablets ----
+   Cabeçalho deixa de empilhar e os utilitários de coluna do
+   Grid entram em ação (2 cards por linha; campos de endereço
+   lado a lado). */
+@media (min-width: 640px) {
+  .cabecalho-conteudo {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .menu-hamburguer {
+    display: none;
+  }
+
+  header nav {
+    width: auto;
+  }
+
+  header nav ul {
+    flex-direction: row;
+    gap: var(--espaco-4);
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
+  }
+
+  h1 {
+    font-size: var(--texto-xl);
+  }
+
+  .col-4,
+  .col-6 {
+    grid-column: span 6;
+  }
+
+  .col-8 {
+    grid-column: span 8;
+  }
+
+  .col-12 {
+    grid-column: span 12;
+  }
+}
+
+/* ---- bp-3: 1024px — tablets grandes / notebooks ----
+   Os cards de projetos.html passam de 2 para 3 por linha. */
+@media (min-width: 1024px) {
+  .grid-cards .col-4 {
+    grid-column: span 4;
+  }
+
+  main {
+    padding-top: var(--espaco-6);
+  }
+}
+
+/* ---- bp-4: 1280px — desktops ----
+   O contêiner de conteúdo ganha mais respiro lateral. */
+@media (min-width: 1280px) {
+  .cabecalho-conteudo,
+  main {
+    max-width: 1200px;
+  }
+}
+
+/* ---- bp-5: 1536px — monitores wide / ultrawide ----
+   Em telas muito largas, o conteúdo ganha um pouco mais de
+   espaço, mas continua limitado para preservar a legibilidade
+   (linhas de texto não devem ultrapassar ~75-80 caracteres). */
+@media (min-width: 1536px) {
+  .cabecalho-conteudo,
+  main {
+    max-width: 1320px;
+  }
+
+  body {
+    font-size: 1.05rem;
+  }
+}
