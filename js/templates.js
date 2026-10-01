@@ -26,7 +26,11 @@ function templateInicio() {
     <section id="apresentacao" class="secao-destaque">
       <h1>ONG Mãos que Ajudam</h1>
       <p>Há mais de 10 anos, transformamos vidas por meio de projetos sociais voltados à educação, alimentação e capacitação profissional de comunidades em situação de vulnerabilidade.</p>
-      <img src="../imagens/voluntarios.png" alt="Ilustração de um grupo de voluntários da ONG distribuindo cestas básicas em uma comunidade" class="imagem-apresentacao">
+      <picture>
+        <source srcset="../imagens/voluntarios.svg" type="image/svg+xml">
+        <source srcset="../imagens/voluntarios-otimizado.webp" type="image/webp">
+        <img src="../imagens/voluntarios.png" alt="Ilustração de um grupo de voluntários da ONG distribuindo cestas básicas em uma comunidade" class="imagem-apresentacao" width="480" height="300">
+      </picture>
       <a href="#/cadastro" class="botao-cta">Quero ajudar</a>
     </section>
 
