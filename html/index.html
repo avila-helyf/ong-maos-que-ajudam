@@ -5,17 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mãos que Ajudam | Início</title>
   <meta name="description" content="ONG Mãos que Ajudam: conheça nossa missão, nossos projetos sociais e como entrar em contato ou colaborar.">
+
+  <!-- Única exceção deliberada ao "um só <script> próprio no fim do
+       documento" (ver comentário antes de main.js, no fim do <body>):
+       este script precisa ser clássico (não type="module") e rodar
+       AQUI, antes de qualquer CSS ser pintado na tela, porque módulos
+       ES6 só são executados depois que o HTML inteiro é analisado —
+       tarde demais para evitar um "flash" do tema errado quando o
+       usuário já tinha escolhido manualmente o tema oposto ao do seu
+       sistema operacional em uma visita anterior (js/tema.js, chamado
+       por main.js, só sincroniza o ÍCONE do botão depois disso). Se
+       nenhuma escolha manual foi salva, o atributo não é definido e a
+       página segue normalmente a preferência do sistema operacional,
+       tratada inteiramente via @media (prefers-color-scheme: dark) no
+       CSS (css/style.css). -->
+  <script>
+    (function () {
+      try {
+        var temaSalvo = localStorage.getItem("maosQueAjudam.tema");
+        if (temaSalvo === "claro" || temaSalvo === "escuro") {
+          document.documentElement.setAttribute("data-tema", temaSalvo);
+        }
+      } catch (erro) {
+        /* localStorage indisponível (navegação privada, bloqueio do
+           navegador etc.): a página só segue a preferência do sistema. */
+      }
+    })();
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="../imagens/logo.svg">
   <link rel="icon" type="image/png" href="../imagens/logo.png">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
+  <a href="#conteudo-spa" class="skip-link">Pular para o conteúdo principal</a>
+
   <header>
     <div class="cabecalho-conteudo">
       <a href="#/inicio" class="logo-link">
-        <img src="../imagens/logo.png" alt="Logotipo da ONG Mãos que Ajudam: duas mãos unidas ao redor de um coração" class="logo">
+        <!-- <picture>: SVG primeiro (ilustração vetorial simples — mais
+             leve e nítida em qualquer resolução/zoom, 1011 bytes), WebP
+             como 2º fallback (4142 bytes, já redimensionado para 128px —
+             o necessário para 42px de exibição em telas de até 3x de
+             densidade), PNG como 3º fallback universal (6541 bytes). O
+             navegador usa a primeira <source> que suportar; width/height
+             evitam reflow (CLS) enquanto a imagem carrega. -->
+        <picture>
+          <source srcset="../imagens/logo.svg" type="image/svg+xml">
+          <source srcset="../imagens/logo-otimizado.webp" type="image/webp">
+          <img src="../imagens/logo.png" alt="Logotipo da ONG Mãos que Ajudam: duas mãos unidas ao redor de um coração" class="logo" width="42" height="42">
+        </picture>
         <span class="nome-ong">Mãos que Ajudam</span>
       </a>
+
+      <!-- Alternância manual de tema (ver js/tema.js). aria-pressed reflete
+           o estado atual (botão liga/desliga, não um link ou um menu) e o
+           rótulo acessível descreve a AÇÃO do próximo clique, não o
+           estado — o ícone (aria-hidden, decorativo) é só reforço visual. -->
+      <button type="button" id="alternar-tema" class="botao-tema" aria-pressed="false" aria-label="Ativar tema escuro">
+        <span aria-hidden="true">☾</span>
+      </button>
+
       <button type="button" class="menu-hamburguer" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-lista">
         <span></span>
         <span></span>
@@ -36,6 +87,13 @@
        recarregar a página. tabindex="-1" permite mover o foco do
        teclado para cá após cada navegação, por acessibilidade. -->
   <main id="conteudo-spa" tabindex="-1"></main>
+
+  <!-- Região viva (WAI-ARIA) só para leitores de tela: anuncia o
+       título da nova view a cada troca de rota. Mover o foco sozinho
+       nem sempre é suficiente para o usuário de leitor de tela
+       perceber que houve uma navegação numa SPA; este texto some
+       visualmente (.sr-only) mas é lido em voz alta. -->
+  <div id="anuncio-rota" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
   <footer>
     <p>&copy; 2026 ONG Mãos que Ajudam. Todos os direitos reservados.</p>

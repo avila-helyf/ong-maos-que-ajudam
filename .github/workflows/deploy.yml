@@ -1,0 +1,71 @@
+# ONG Mãos que Ajudam — publicação contínua no GitHub Pages
+#
+# Dispara a cada push na branch "main" (a branch de release, seguindo o
+# GitFlow do projeto: features entram em "develop" e só chegam a "main"
+# quando uma versão é de fato lançada — ver README.md). Cada push ali
+# refaz o build de produção (bundling + minificação via Vite, cópia dos
+# estáticos que o Vite não enxerga) e publica o conteúdo de dist/ no
+# GitHub Pages, sem passo manual nenhum depois do primeiro setup.
+#
+# VITE_BASE=/ong-maos-que-ajudam/ é definido só aqui: o GitHub Pages de
+# um repositório de projeto serve o site dentro desse subcaminho
+# (https://<usuario>.github.io/ong-maos-que-ajudam/), diferente de
+# localhost ou de hosts que servem na raiz do domínio — por isso esse
+# ajuste fica isolado no workflow, e não no vite.config.js (ver
+# comentário lá).
+
+name: Deploy (GitHub Pages)
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build de produção
+        run: npm run build
+        env:
+          VITE_BASE: /ong-maos-que-ajudam/
+
+      - name: Preparar o Pages
+        uses: actions/configure-pages@v5
+
+      - name: Enviar artefato (dist/)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

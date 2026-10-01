@@ -35,7 +35,7 @@ function atualizarLinkAtivo(rota) {
   });
 }
 
-function renderizarRota(conteudo) {
+function renderizarRota(conteudo, ehCargaInicial) {
   const rota = normalizarRota(location.hash);
   const view = ROTAS[rota] || ROTAS.inicio;
 
@@ -45,6 +45,19 @@ function renderizarRota(conteudo) {
 
   document.title = view.titulo;
   atualizarLinkAtivo(rota);
+
+  /* Anuncia a navegação para quem usa leitor de tela (ver #anuncio-rota
+     no index.html) — só em navegações reais dentro da SPA, não na carga
+     inicial (nada "aconteceu" ainda nesse momento, e o leitor de tela já
+     anuncia o título da página normalmente ao carregá-la). Como é uma
+     região aria-live="polite", a mudança de texto é lida automaticamente,
+     sem roubar o foco do usuário. */
+  if (!ehCargaInicial) {
+    const anuncioRota = document.getElementById("anuncio-rota");
+    if (anuncioRota) {
+      anuncioRota.textContent = "Navegou para: " + view.titulo;
+    }
+  }
 
   /* Views com formulário/JS próprio (ex.: cadastro) reanexam seus
      listeners aqui, já que os elementos acabaram de ser recriados
@@ -56,8 +69,16 @@ function renderizarRota(conteudo) {
 
   /* Acessibilidade: move o foco para o novo conteúdo e volta o
      scroll ao topo, simulando a navegação de uma página "de
-     verdade" para quem usa teclado ou leitor de tela. */
-  conteudo.focus();
+     verdade" para quem usa teclado ou leitor de tela — mas só em
+     navegações DENTRO da SPA, não na carga inicial da página. Focar
+     #conteudo-spa automaticamente já na primeira renderização faria
+     o foco do teclado "pular" o skip-link (que é o primeiro elemento
+     focável do documento) antes mesmo do usuário apertar Tab uma vez,
+     inutilizando-o. Na carga inicial, o foco é deixado no início do
+     documento, como em qualquer página comum. */
+  if (!ehCargaInicial) {
+    conteudo.focus();
+  }
   window.scrollTo(0, 0);
 
   fecharMenuMobile();
@@ -68,8 +89,8 @@ export function iniciarRoteador() {
   if (!conteudo) return;
 
   window.addEventListener("hashchange", function () {
-    renderizarRota(conteudo);
+    renderizarRota(conteudo, false);
   });
 
-  renderizarRota(conteudo);
+  renderizarRota(conteudo, true);
 }

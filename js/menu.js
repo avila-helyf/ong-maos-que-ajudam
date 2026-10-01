@@ -22,6 +22,11 @@ function alternarMenu(forcarFechado) {
   const aberto = botaoMenu.getAttribute("aria-expanded") === "true";
   const novoEstado = forcarFechado ? false : !aberto;
   botaoMenu.setAttribute("aria-expanded", String(novoEstado));
+  /* aria-expanded sozinho não é suficiente: nem todo leitor de tela
+     anuncia a mudança de estado de forma clara em todo contexto, então
+     também trocamos o rótulo acessível do botão (antes ficava sempre
+     "Abrir menu", mesmo com o menu já aberto). */
+  botaoMenu.setAttribute("aria-label", novoEstado ? "Fechar menu" : "Abrir menu");
   listaMenu.classList.toggle("menu-aberto", novoEstado);
 }
 
