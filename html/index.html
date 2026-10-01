@@ -10,6 +10,8 @@
 </head>
 <body>
 
+  <a href="#conteudo-spa" class="skip-link">Pular para o conteúdo principal</a>
+
   <header>
     <div class="cabecalho-conteudo">
       <a href="#/inicio" class="logo-link">
@@ -36,6 +38,13 @@
        recarregar a página. tabindex="-1" permite mover o foco do
        teclado para cá após cada navegação, por acessibilidade. -->
   <main id="conteudo-spa" tabindex="-1"></main>
+
+  <!-- Região viva (WAI-ARIA) só para leitores de tela: anuncia o
+       título da nova view a cada troca de rota. Mover o foco sozinho
+       nem sempre é suficiente para o usuário de leitor de tela
+       perceber que houve uma navegação numa SPA; este texto some
+       visualmente (.sr-only) mas é lido em voz alta. -->
+  <div id="anuncio-rota" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
   <footer>
     <p>&copy; 2026 ONG Mãos que Ajudam. Todos os direitos reservados.</p>

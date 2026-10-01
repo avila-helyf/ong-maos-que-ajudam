@@ -10,7 +10,10 @@
 
   /* ---- Cores secundárias (destaque / chamada para ação) ---- */
   --cor-secundaria: #f4a636;
-  --cor-secundaria-escura: #d98f20;
+  /* Ajustada de #d98f20 para #986416 (auditoria WCAG 2.1 AA): a tonalidade
+     anterior, usada como texto do badge secundário sobre #fdf1dd, tinha
+     contraste de só 2.38:1 — abaixo do mínimo de 4.5:1 para texto normal. */
+  --cor-secundaria-escura: #986416;
 
   /* ---- Cores neutras (texto, fundos, bordas) ---- */
   --cor-neutro-900: #232323;
@@ -21,7 +24,11 @@
 
   /* ---- Cores semânticas (feedback de validação de formulário) ---- */
   --cor-erro: #c0392b;
-  --cor-sucesso: #2f9e58;
+  /* Ajustada de #2f9e58 para #267e46 (auditoria WCAG 2.1 AA): como texto
+     do alerta de sucesso sobre #eaf7ee, a tonalidade anterior tinha
+     contraste de só 3.09:1 — abaixo do mínimo de 4.5:1. A nova continua
+     com folga como border-color de campo válido (5.05:1 contra branco). */
+  --cor-sucesso: #267e46;
 
   /* ---- Escala tipográfica (5 tamanhos, razão ~1.25) ---- */
   --texto-sm: 0.8rem;     /* 12.8px — legendas, dicas de campo */
@@ -81,6 +88,42 @@ a {
 a:hover,
 a:focus {
   text-decoration: underline;
+}
+
+/* ---------- Acessibilidade: utilitários ---------- */
+
+/* Esconde visualmente um elemento sem removê-lo da árvore de
+   acessibilidade — leitores de tela continuam lendo o conteúdo.
+   Usado na região que anuncia a troca de rota da SPA. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Link de bypass (WCAG 2.4.1): primeiro elemento focável da página,
+   invisível até receber foco pelo teclado (Tab), permitindo pular o
+   cabeçalho/menu e ir direto para o conteúdo principal. */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background-color: var(--cor-primaria-escura);
+  color: var(--cor-neutro-000);
+  padding: var(--espaco-2) var(--espaco-3);
+  z-index: 100;
+  border-radius: 0 0 var(--raio) 0;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 /* ---------- Cabeçalho ---------- */
@@ -383,7 +426,7 @@ legend {
 .campo input.tocado:valid,
 .campo select.tocado:valid {
   border-color: var(--cor-sucesso);
-  box-shadow: 0 0 0 3px rgba(47, 158, 88, 0.12);
+  box-shadow: 0 0 0 3px rgba(38, 126, 70, 0.12);
 }
 
 .campo small {
