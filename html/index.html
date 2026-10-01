@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mãos que Ajudam | Início</title>
+  <meta name="description" content="ONG Mãos que Ajudam: conheça nossa missão, nossos projetos sociais e como entrar em contato ou colaborar.">
+  <link rel="icon" type="image/png" href="../imagens/logo.png">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="cabecalho-conteudo">
+      <a href="#/inicio" class="logo-link">
+        <img src="../imagens/logo.png" alt="Logotipo da ONG Mãos que Ajudam: duas mãos unidas ao redor de um coração" class="logo">
+        <span class="nome-ong">Mãos que Ajudam</span>
+      </a>
+      <button type="button" class="menu-hamburguer" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-lista">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav aria-label="Navegação principal">
+        <ul id="menu-lista">
+          <li><a href="#/inicio">Início</a></li>
+          <li><a href="#/projetos">Projetos</a></li>
+          <li><a href="#/cadastro">Cadastre-se</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contêiner alvo da SPA: o roteador (js/router.js) substitui o
+       conteúdo deste elemento a cada mudança de rota (#/...), sem
+       recarregar a página. tabindex="-1" permite mover o foco do
+       teclado para cá após cada navegação, por acessibilidade. -->
+  <main id="conteudo-spa" tabindex="-1"></main>
+
+  <footer>
+    <p>&copy; 2026 ONG Mãos que Ajudam. Todos os direitos reservados.</p>
+    <nav aria-label="Navegação do rodapé">
+      <ul>
+        <li><a href="#/inicio">Início</a></li>
+        <li><a href="#/projetos">Projetos</a></li>
+        <li><a href="#/cadastro">Cadastre-se</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- IMask.js (v7.6.1, licença MIT) — biblioteca externa para máscaras
+       de campo (CPF/telefone/CEP). Vendorizada localmente em
+       js/vendor/ (via npm install imask) em vez de carregada por CDN,
+       pois o ambiente onde este projeto foi desenvolvido bloqueia
+       acesso a CDNs de terceiros; funciona igual num servidor normal.
+       É um script clássico (expõe IMask como variável global) porque
+       o build distribuído não é um módulo ES6 — por isso fica fora
+       do grafo de import/export do código abaixo. -->
+  <script src="../js/vendor/imask.min.js"></script>
+
+  <!-- Único ponto de entrada do JavaScript próprio do projeto. Todos
+       os demais arquivos (menu.js, router.js, templates.js,
+       armazenamento.js, mascaras.js, feedback.js) são módulos ES6
+       carregados por import/export a partir deste — nenhum outro
+       precisa de uma tag <script> própria aqui. -->
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>
