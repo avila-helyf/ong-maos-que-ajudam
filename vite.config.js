@@ -16,6 +16,14 @@ export default defineConfig({
      porque são resolvidos relativos à pasta do próprio arquivo HTML
      (html/), o que cai dentro da raiz do projeto de qualquer forma. */
   root: ".",
+  /* Caminho-base dos arquivos finais. Localmente (preview) e em hosts
+     que servem o site na raiz do domínio (Vercel/Netlify), continua
+     "/". O GitHub Pages de um "repositório de projeto" (não o de
+     usuário) serve tudo dentro de /<nome-do-repositorio>/ — por isso o
+     workflow de deploy (.github/workflows/deploy.yml) builda com
+     VITE_BASE=/ong-maos-que-ajudam/, sobrescrevendo esse padrão só
+     naquele ambiente. */
+  base: process.env.VITE_BASE || "/",
   build: {
     outDir: "dist",
     /* Minificação de JS/CSS via esbuild (padrão do Vite) — a de HTML é
