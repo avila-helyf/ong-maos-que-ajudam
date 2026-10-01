@@ -1,7 +1,7 @@
 {
   "name": "ong-maos-que-ajudam",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "SPA da ONG Mãos que Ajudam — build de produção com Vite (bundling + minificação de CSS/JS/HTML).",
   "type": "module",
   "scripts": {

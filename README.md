@@ -127,7 +127,7 @@ Repositório: `https://github.com/avila-helyf/ong-maos-que-ajudam`
 
 ## Versionamento
 
-O projeto segue [Versionamento Semântico (SemVer)](https://semver.org/lang/pt-BR/) e o fluxo **GitFlow** (`main`/`develop`/`feature/*`/`release/*`). A versão atual é a `v1.0.0` (tag anotada na branch `main`).
+O projeto segue [Versionamento Semântico (SemVer)](https://semver.org/lang/pt-BR/) e o fluxo **GitFlow** (`main`/`develop`/`feature/*`/`release/*`). A versão atual é a `v1.1.0` (tag anotada na branch `main`) — incremento *minor* sobre a `v1.0.0` por adicionar funcionalidades novas e retrocompatíveis: tema escuro/alto contraste, build de produção com Vite, otimização de imagens e publicação contínua no GitHub Pages.
 
 ## Licença
 
