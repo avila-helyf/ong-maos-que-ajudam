@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mãos que Ajudam | Início</title>
   <meta name="description" content="ONG Mãos que Ajudam: conheça nossa missão, nossos projetos sociais e como entrar em contato ou colaborar.">
+
+  <!-- Única exceção deliberada ao "um só <script> próprio no fim do
+       documento" (ver comentário antes de main.js, no fim do <body>):
+       este script precisa ser clássico (não type="module") e rodar
+       AQUI, antes de qualquer CSS ser pintado na tela, porque módulos
+       ES6 só são executados depois que o HTML inteiro é analisado —
+       tarde demais para evitar um "flash" do tema errado quando o
+       usuário já tinha escolhido manualmente o tema oposto ao do seu
+       sistema operacional em uma visita anterior (js/tema.js, chamado
+       por main.js, só sincroniza o ÍCONE do botão depois disso). Se
+       nenhuma escolha manual foi salva, o atributo não é definido e a
+       página segue normalmente a preferência do sistema operacional,
+       tratada inteiramente via @media (prefers-color-scheme: dark) no
+       CSS (css/style.css). -->
+  <script>
+    (function () {
+      try {
+        var temaSalvo = localStorage.getItem("maosQueAjudam.tema");
+        if (temaSalvo === "claro" || temaSalvo === "escuro") {
+          document.documentElement.setAttribute("data-tema", temaSalvo);
+        }
+      } catch (erro) {
+        /* localStorage indisponível (navegação privada, bloqueio do
+           navegador etc.): a página só segue a preferência do sistema. */
+      }
+    })();
+  </script>
+
   <link rel="icon" type="image/png" href="../imagens/logo.png">
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -18,6 +46,15 @@
         <img src="../imagens/logo.png" alt="Logotipo da ONG Mãos que Ajudam: duas mãos unidas ao redor de um coração" class="logo">
         <span class="nome-ong">Mãos que Ajudam</span>
       </a>
+
+      <!-- Alternância manual de tema (ver js/tema.js). aria-pressed reflete
+           o estado atual (botão liga/desliga, não um link ou um menu) e o
+           rótulo acessível descreve a AÇÃO do próximo clique, não o
+           estado — o ícone (aria-hidden, decorativo) é só reforço visual. -->
+      <button type="button" id="alternar-tema" class="botao-tema" aria-pressed="false" aria-label="Ativar tema escuro">
+        <span aria-hidden="true">☾</span>
+      </button>
+
       <button type="button" class="menu-hamburguer" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-lista">
         <span></span>
         <span></span>

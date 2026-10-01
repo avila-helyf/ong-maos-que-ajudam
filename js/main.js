@@ -9,10 +9,12 @@
 
 import { inicializarMenu } from "./menu.js";
 import { iniciarRoteador } from "./router.js";
+import { inicializarTema } from "./tema.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   inicializarMenu();
   iniciarRoteador();
+  inicializarTema();
 
   /* O link de bypass ("Pular para o conteúdo principal") NÃO pode usar
      href="#conteudo-spa" normalmente: como router.js escuta TODO evento
