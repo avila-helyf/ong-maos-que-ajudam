@@ -33,6 +33,7 @@
     })();
   </script>
 
+  <link rel="icon" type="image/svg+xml" href="../imagens/logo.svg">
   <link rel="icon" type="image/png" href="../imagens/logo.png">
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -43,7 +44,18 @@
   <header>
     <div class="cabecalho-conteudo">
       <a href="#/inicio" class="logo-link">
-        <img src="../imagens/logo.png" alt="Logotipo da ONG Mãos que Ajudam: duas mãos unidas ao redor de um coração" class="logo">
+        <!-- <picture>: SVG primeiro (ilustração vetorial simples — mais
+             leve e nítida em qualquer resolução/zoom, 1011 bytes), WebP
+             como 2º fallback (4142 bytes, já redimensionado para 128px —
+             o necessário para 42px de exibição em telas de até 3x de
+             densidade), PNG como 3º fallback universal (6541 bytes). O
+             navegador usa a primeira <source> que suportar; width/height
+             evitam reflow (CLS) enquanto a imagem carrega. -->
+        <picture>
+          <source srcset="../imagens/logo.svg" type="image/svg+xml">
+          <source srcset="../imagens/logo-otimizado.webp" type="image/webp">
+          <img src="../imagens/logo.png" alt="Logotipo da ONG Mãos que Ajudam: duas mãos unidas ao redor de um coração" class="logo" width="42" height="42">
+        </picture>
         <span class="nome-ong">Mãos que Ajudam</span>
       </a>
 
